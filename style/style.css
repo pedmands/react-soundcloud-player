@@ -3,32 +3,49 @@ body {
   display:flex;
   align-items: center;
   justify-content: center;
-  }
+  height: 100vh;
+  background-color: #eee !important;
+}
+.player {
+  width: 420px;
+  position: relative;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
 .cover {
   display: flex;
-  border: 1px solid #ccc;
-  overflow: auto;
+  height:120px;
+  border-bottom: 1px solid #ccc;
+  background: url(https://static1.squarespace.com/static/5179f704e4b0f0be01c191ad/t/5492e756e4b087ef8e0508f1/1418913622786/?format=750w);
+  background-position: center -125px;
+  background-size: cover;
 }
-.cover > img {
+.cover > a {
   width: 100%;
   height:100%;
 }
 .track-info h1 {
   font-size: 20px;
   text-align: center;
+  margin: 10px auto;
   }
-  .track-info h2 {
-    font-size: 18px;
-    text-align: center;
-  }
-.player {
-  width: 420px;
-  margin: 20px;
-  position: relative;
-  }
+.track-info h1 a {
+  color: black;
+}
+.track-info h2 {
+  font-size: 20px;
+  text-align: center;
+  margin: 10px auto;
+}
+.track-info h2 a {
+  color: #999;
+}
 .meta {
   display: flex;
   background: #eee;
+  color: #999;
+  height: 30px;
+  font-size: 14px;
 }
 .meta > span {
   flex-grow: 1;
@@ -38,15 +55,17 @@ body {
   display: flex;
 }
 .meta > span > i {
-  color: #999;
+  margin:10px;
 }
 .sc_logo {
-  width:50px;
+  width:30px;
   opacity: .4;
 }
 .controls {
   background: #F6F6F6;
   display: flex;
+  height: 60px;
+  border-bottom: 1px solid #ccc;
 }
 .control {
   font-family: 'Fontawesome';
@@ -74,16 +93,34 @@ body {
   font-family: 'Fontawesome';
   content: '\f048';
 }
-
 .play-btn {
-  font-size: 30px;
+  width: 25px;
 }
-.play-btn.play::after {
-  content: '\f01d';
+/* Progress / Timer */
+.progress-time {
+  display:flex;
+  align-items: center;
+  font-size: 12px;
 }
-.play-btn.pause::after {
-  content: '\f28c';
+.sb-soundplayer-progress-container {
+    background-color: #DDD;
+    height: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    flex-grow: 1;
+    margin-bottom: 0;
 }
+.current-time,.duration {
+  padding: 10px;
+}
+.sb-soundplayer-progress-inner {
+    background-color: #999;
+    height: 100%;
+    -webkit-transition: width .2s ease-in;
+    transition: width .2s ease-in;
+}
+
+/* Playlist */
 .playlist {
   background: #eee;
   position: absolute;
@@ -92,6 +129,9 @@ body {
   list-style-type: none;
   margin-left: 0;
   padding-left: 0;
+}
+.playlist-toggle {
+  display: none;
 }
 .playlist.hide {
   display: none;
@@ -102,20 +142,6 @@ body {
 .playlist-item:hover {
   background-color: #ccc;
 }
-.sb-soundplayer-progress-container {
-    background-color: #DDD;
-    height: 10px;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-.sb-soundplayer-progress-inner {
-    background-color: #FC561E;
-    height: 100%;
-    -webkit-transition: width .2s ease-in;
-    transition: width .2s ease-in;
-}
-
 .active {
   background-color: #999;
 }

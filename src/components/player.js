@@ -18,12 +18,36 @@ class CustomPlayer extends React.Component {
             condition: false
         };
     }
-    play(e) {
+    prettyTime(time) {
+        let hours = Math.floor(time / 3600);
+        let mins = '0' + Math.floor((time % 3600) / 60);
+        let secs = '0' + Math.floor((time % 60));
+
+        mins = mins.substr(mins.length - 2);
+        secs = secs.substr(secs.length - 2);
+
+        if (!isNaN(secs)) {
+            if (hours) {
+                return `${hours}:${mins}:${secs}`;
+            }
+            return `${mins}:${secs}`;
+        }
+        return '00:00';
+    } //prettyTime
+    prettyCount(count) {
+      let kCount = (count / 1000);
+      let finalCount = Math.round(kCount * 10 ) / 10;
+      if (count > 1000) {
+        return `${finalCount}k`;
+      }
+      return count;
+    }
+    play() {
         let { soundCloudAudio, playing } = this.props;
         if (playing) {
-            soundCloudAudio.pause(e);
+            soundCloudAudio.pause();
         } else {
-            soundCloudAudio.play(e);
+            soundCloudAudio.play();
         }
     }
     playTrackAtIndex(playlistIndex) {
@@ -67,7 +91,6 @@ class CustomPlayer extends React.Component {
         if (this.state.activeIndex === i) {
           classNames = "playlist-item active";
         }
-
         return (
           <li
             key={track.id}
@@ -96,18 +119,21 @@ class CustomPlayer extends React.Component {
           let activeTrack = playlist.tracks[activeIndex];
           const cover = 'https://static1.squarespace.com/static/5179f704e4b0f0be01c191ad/t/5492e756e4b087ef8e0508f1/1418913622786/?format=750w';
           const url = activeTrack.permalink_url;
+          const playlistUrl = playlist.permalink_url;
+          const userUrl = playlist.user.permalink_url;
           const logo = 'http://dev.bowdenweb.com/a/i/cons/icomoon/soundcloud1.png';
-
+          const trackTitle = activeTrack.title.substring(0, (activeTrack.title.length - 35));
+          
           return (
             <div>
-            <div className="cover"><img src={cover} /></div>
+            <div className="cover"><a href={playlistUrl}></a></div>
             <div className="track-info">
-                <h1>{activeTrack.title}</h1>
-                <h2>{activeTrack.user.username}</h2>
+                <h1><a href={url}>{trackTitle}</a></h1>
+                <h2><a href={userUrl}>{activeTrack.user.username}</a></h2>
                 <div className="meta">
-                  <span><a href={url}><img className="sc_logo" src={logo} /></a></span>
-                  <span><i className="fa fa-play"></i>{activeTrack.playback_count}</span>
-                  <span><i className="fa fa-heart"></i>{activeTrack.favoritings_count}</span>
+                  <span><a href={playlistUrl}><img className="sc_logo" src={logo} /></a></span>
+                  <span><i className="fa fa-play"></i>{this.prettyCount(activeTrack.playback_count)}</span>
+                  <span><i className="fa fa-heart"></i>{this.prettyCount(activeTrack.favoritings_count)}</span>
                   <span><i className="fa fa-comment"></i>{activeTrack.comment_count}</span>
                 </div>
             </div>
@@ -120,7 +146,7 @@ class CustomPlayer extends React.Component {
                 ></button>
               </span>
               <span className="control">
-                <button
+                <PlayButton
                 onClick={this.play.bind(this)}
                   className={playing ? 'play-btn pause' : 'play-btn play'}
                   {...this.props}
@@ -136,15 +162,20 @@ class CustomPlayer extends React.Component {
               </span>
             </div>
             <div className="progress-time">
+            <span className="current-time">
+            {this.prettyTime(currentTime)}
+            </span>
               <Progress
                   value={(currentTime / duration) * 100 || 0}
-                  className="progress"
+                  className="my-progress"
                   {...this.props}
               />
-              <Timer duration={duration || 0} currentTime={currentTime} {...this.props} />
+              <span className="duration">
+              {this.prettyTime(duration)}
+              </span>
             </div>
 
-              <button type="button" onClick={this.handleClick.bind(this)}>
+              <button className= "playlist-toggle" type="button" onClick={this.handleClick.bind(this)}>
                 <i className="fa fa-list"></i>
               </button>
 
