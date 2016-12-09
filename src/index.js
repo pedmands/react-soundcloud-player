@@ -11,9 +11,8 @@ const markUrl = 'https://api.soundcloud.com/playlists/59222356';
 const { SoundCloudLogoSVG } = Icons;
 
 import { PlayButton, Progress, Icons } from 'react-soundplayer/components';
-import App from './components/app';
+
 import Player from './components/player';
-import Playlister from './components/player2';
 import reducers from './reducers';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
