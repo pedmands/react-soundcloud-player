@@ -6,8 +6,7 @@ import { Icons } from 'react-soundplayer/components';
 
 
 const clientId = '08f79801a998c381762ec5b15e4914d5';
-const streamUrl = 'https://soundcloud.com/pedmands/before-he-goes';
-const markUrl = 'https://soundcloud.com/markhphillips/sets/original-score-from-serial-mark-h-phillips';
+const serialUrl = 'https://soundcloud.com/markhphillips/sets/original-score-from-serial-mark-h-phillips';
 
 class CustomPlayer extends React.Component {
     constructor() {
@@ -117,18 +116,19 @@ class CustomPlayer extends React.Component {
           return <div className="loader"> Loading... </div>;
         }
           let activeTrack = playlist.tracks[activeIndex];
-          const cover = 'https://static1.squarespace.com/static/5179f704e4b0f0be01c191ad/t/5492e756e4b087ef8e0508f1/1418913622786/?format=750w';
           const url = activeTrack.permalink_url;
           const playlistUrl = playlist.permalink_url;
+          const playlistTitle = playlist.title.substring(0, (playlist.title.length - 18));
           const userUrl = playlist.user.permalink_url;
           const logo = 'http://dev.bowdenweb.com/a/i/cons/icomoon/soundcloud1.png';
           const trackTitle = activeTrack.title.substring(0, (activeTrack.title.length - 35));
-          
+
           return (
             <div>
             <div className="cover"><a href={playlistUrl}></a></div>
             <div className="track-info">
                 <h1><a href={url}>{trackTitle}</a></h1>
+                <h3><a href={playlistUrl}>{playlistTitle}</a></h3>
                 <h2><a href={userUrl}>{activeTrack.user.username}</a></h2>
                 <div className="meta">
                   <span><a href={playlistUrl}><img className="sc_logo" src={logo} /></a></span>
@@ -186,11 +186,11 @@ class CustomPlayer extends React.Component {
     }
 }
 
-export default class Player extends Component {
+export default class SerialPlayer extends Component {
 
   render() {
     return (
-        <SoundPlayerContainer resolveUrl={markUrl} clientId={clientId} {...this.props}>
+        <SoundPlayerContainer resolveUrl={serialUrl} clientId={clientId} {...this.props}>
             <CustomPlayer />
         </SoundPlayerContainer>
     );
