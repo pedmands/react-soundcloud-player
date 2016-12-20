@@ -97,6 +97,9 @@ class CustomPlayer extends React.Component {
             className={classNames}
           >
             {i + 1}. {track.title}
+            <span className="pb-count">
+              {track.playback_count}
+            </span>
           </li>
         );
       });
